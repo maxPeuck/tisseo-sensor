@@ -136,9 +136,9 @@ class TisseoSensor(Entity):
 
         busCount = 0
         for line in BusLineManager.getInstance().lineList:
-            attr["bus_" + busCount] = line.name
-            attr["bus_" + busCount + "next1"] = line.timeList[0]
-            attr["bus_" + busCount + "next2"] = line.timeList[1]
+            attr["bus_" + str(busCount)] = line.name
+            attr["bus_" + str(busCount) + "next1"] = line.timeList[0]
+            attr["bus_" + str(busCount) + "next2"] = line.timeList[1]
             busCount +=1
 
         return attr
