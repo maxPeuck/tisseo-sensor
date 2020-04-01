@@ -157,8 +157,6 @@ class TisseoSensor(Entity):
         TISSEOURL="https://api.tisseo.fr/v1/stops_schedules.json?stopPointId=" + \
             self._stopid+"&key="+self._apikey
         tisseoFile = "/tmp/tisseo_" + self._stopid + ".json"
-        _LOGGER.debug("New Json created")
-
         opener = urllib.request.build_opener()
         opener.addheaders = [('User-agent', 'Mozilla/5.0')]
         urllib.request.install_opener(opener)
