@@ -125,7 +125,6 @@ class TisseoSensor(Entity):
         attr["stop_id"] = self._stopid
 
         departures = tisseodata['departures']
-        expDate = departures['expirationDate']
         departurelist = departures['departure']
 
         for dep in departurelist:
