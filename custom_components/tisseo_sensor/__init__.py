@@ -1,1 +1,1 @@
-"""Translink Sensor."""
+"""Tisseo Sensor."""

@@ -23,7 +23,7 @@ CONF_STOPID = 'stop_id'
 CONF_ROUTENUMBER = 'route_number'
 CONF_APIKEY = 'api_key'
 
-DEFAULT_NAME = 'Translink Next Bus'
+DEFAULT_NAME = 'Tisseo Next Bus'
 DEFAULT_ICON = 'mdi:bus'
 
 SCAN_INTERVAL = timedelta(seconds=240)
@@ -157,6 +157,7 @@ class TisseoSensor(Entity):
         TISSEOURL="https://api.tisseo.fr/v1/stops_schedules.json?stopPointId=" + \
             self._stopid+"&key="+self._apikey
         tisseoFile = "/tmp/tisseo_" + self._stopid + ".json"
+        _LOGGER.debug("New Json created")
 
         opener = urllib.request.build_opener()
         opener.addheaders = [('User-agent', 'Mozilla/5.0')]
