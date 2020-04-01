@@ -1,7 +1,7 @@
 {
-  "domain": "translink_sensor",
-  "name": "Translink Sensor",
-  "documentation": "https://github.com/math0ne/translink_sensor",
+  "domain": "tisseo_sensor",
+  "name": "Tisseo Sensor",
+  "documentation": "https://github.com/maxPeuck/tisseo-sensor",
   "dependencies": [],
   "codeowners": [],
   "requirements": []
