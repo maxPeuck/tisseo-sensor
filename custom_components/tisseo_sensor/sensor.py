@@ -124,6 +124,8 @@ class TisseoSensor(Entity):
 
         attr["stop_id"] = self._stopid
 
+        print(tisseodata)
+
         departures = tisseodata['departures']
         departurelist = departures['departure']
 
