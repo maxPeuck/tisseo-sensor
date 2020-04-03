@@ -10,6 +10,7 @@ from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import ATTR_ATTRIBUTION, CONF_NAME
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 import homeassistant.helpers.config_validation as cv
+from custom_components.hacs.globals import get_hacs
 from homeassistant.helpers.entity import Entity
 
 import xml.etree.ElementTree as ET
@@ -124,7 +125,8 @@ class TisseoSensor(Entity):
 
         attr["stop_id"] = self._stopid
 
-        print(tisseodata)
+         hacs = get_hacs()
+        hacs.logger.critical("state.")
 
         departures = tisseodata['departures']
         departurelist = departures['departure']
@@ -163,6 +165,8 @@ class TisseoSensor(Entity):
         urllib.request.urlretrieve(TISSEOURL, tisseoFile)
         tisseodata = json.load(open(tisseoFile))
 
+        hacs = get_hacs()
+        hacs.logger.critical("Update.")
 
         self._state = 1
         return self._state
