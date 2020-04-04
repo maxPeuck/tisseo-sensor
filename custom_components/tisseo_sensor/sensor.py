@@ -154,6 +154,7 @@ class TisseoSensor(Entity):
                 attr["bus_" + str(busCount) + "next2"] = "none"
             busCount +=1
 
+            attr['expirationDate'] = tisseodata['expirationDate']
         return attr
 
     @asyncio.coroutine
@@ -171,7 +172,7 @@ class TisseoSensor(Entity):
         hacs = get_hacs()
         hacs.logger.critical(tisseodata['expirationDate'])
 
-        self._state = 1
+        self._state = tisseodata['expirationDate']
         return self._state
 
     @property
