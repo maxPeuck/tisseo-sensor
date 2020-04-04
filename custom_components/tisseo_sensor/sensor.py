@@ -126,10 +126,11 @@ class TisseoSensor(Entity):
         attr["stop_id"] = self._stopid
 
         hacs = get_hacs()
-        hacs.logger.critical("state.")
+        hacs.logger.critical(str(tisseodata))
 
         departures = tisseodata['departures']
         departurelist = departures['departure']
+        
 
         for dep in departurelist:
             direction = dep['destination'][0]['name']
