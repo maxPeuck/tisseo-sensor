@@ -166,7 +166,7 @@ class TisseoSensor(Entity):
         tisseodata = json.load(open(tisseoFile))
 
         hacs = get_hacs()
-        hacs.logger.debug(tisseodata)
+        hacs.logger.warning(tisseodata)
 
         self._state = 1
         return self._state
