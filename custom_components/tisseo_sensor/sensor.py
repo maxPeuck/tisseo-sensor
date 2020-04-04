@@ -166,7 +166,7 @@ class TisseoSensor(Entity):
         tisseodata = json.load(open(tisseoFile))
 
         hacs = get_hacs()
-        hacs.logger.warning(tisseodata)
+        hacs.logger.critical(tisseodata['expirationDate'])
 
         self._state = 1
         return self._state
