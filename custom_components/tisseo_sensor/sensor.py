@@ -125,7 +125,7 @@ class TisseoSensor(Entity):
 
         attr["stop_id"] = self._stopid
 
-         hacs = get_hacs()
+        hacs = get_hacs()
         hacs.logger.critical("state.")
 
         departures = tisseodata['departures']
