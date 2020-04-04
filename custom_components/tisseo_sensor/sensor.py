@@ -27,7 +27,7 @@ CONF_APIKEY = 'api_key'
 DEFAULT_NAME = 'Tisseo Next Bus'
 DEFAULT_ICON = 'mdi:bus'
 
-SCAN_INTERVAL = timedelta(seconds=240)
+SCAN_INTERVAL = timedelta(seconds=120)
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_STOPID): cv.string,
@@ -80,7 +80,8 @@ class BusLineManager:
             raise Exception("This class is a singleton!")
         else:
             BusLineManager.__instance = self
-
+    def reset(self):
+        self.lineList.clear();
     def printLinelist(self):
         print("Recorded Lines")
         for line in self.lineList:
@@ -131,6 +132,7 @@ class TisseoSensor(Entity):
         departures = tisseodata['departures']
         departurelist = departures['departure']
         
+        BusLineManager.getInstance().reset()
 
         for dep in departurelist:
             direction = dep['destination'][0]['name']
