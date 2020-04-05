@@ -126,8 +126,8 @@ class TisseoSensor(Entity):
 
         attr["stop_id"] = self._stopid
 
-        hacs = get_hacs()
-        hacs.logger.critical(str(tisseodata))
+        #hacs = get_hacs()
+        #hacs.logger.critical(str(tisseodata))
 
         departures = tisseodata['departures']
         departurelist = departures['departure']
@@ -169,8 +169,8 @@ class TisseoSensor(Entity):
         urllib.request.urlretrieve(TISSEOURL, tisseoFile)
         tisseodata = json.load(open(tisseoFile))
 
-        hacs = get_hacs()
-        hacs.logger.critical(tisseodata['expirationDate'])
+        #hacs = get_hacs()
+        #hacs.logger.critical(tisseodata['expirationDate'])
 
         self._state = tisseodata['expirationDate']
         return self._state
