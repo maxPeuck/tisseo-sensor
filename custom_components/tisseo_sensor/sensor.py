@@ -76,6 +76,8 @@ class BusLineManager:
             BusLineManager()
         return BusLineManager.__instance
 
+        
+
     def __init__(self):
         """ Virtually private constructor. """
         if BusLineManager.__instance != None:
