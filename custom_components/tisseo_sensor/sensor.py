@@ -63,10 +63,9 @@ class TisseoLine:
     def addTime(self, time):
         if(self._timeList[0] == "none"):
             self._timeList[0] = time
-            return
-        if(self._timeList[1] == "none"):
+        elif(self._timeList[1] == "none"):
             self._timeList[1] = time
-            return
+        
 
 
 class BusLineManager:
