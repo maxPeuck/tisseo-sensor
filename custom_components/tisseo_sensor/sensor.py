@@ -159,7 +159,7 @@ class TisseoSensor(Entity):
                 attr["bus_" + str(busCount) + "next2"] = line._timeList[1]
             else:
                 attr["bus_" + str(busCount) + "next2"] = "none"
-            attr["bus_" + str(busCount) + "color"] = line._lineColor
+            attr["bus_" + str(busCount) + "color"] = line._color
             busCount += 1
 
             dataString = dataString + "#" + line._shortName + \
