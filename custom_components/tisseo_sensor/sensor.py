@@ -99,7 +99,7 @@ class BusLineManager:
         tempLine = None
 
         for currentLine in self._lineList:
-            if currentLine.name == fullName:
+            if currentLine._name == fullName:
                 tempLine = currentLine
                 if len(currentLine._timeList) < 2:
                     currentLine.addTime(time)
