@@ -105,8 +105,7 @@ class BusLineManager:
         for currentLine in self._lineList:
             if currentLine._name == fullName:
                 tempLine = currentLine
-                if len(currentLine._timeList) < 2:
-                    currentLine.addTime(time)
+                currentLine.addTime(time)
 
         if tempLine == None:
             print("new line: " + fullName)
