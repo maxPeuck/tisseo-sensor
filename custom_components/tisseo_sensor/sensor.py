@@ -84,7 +84,7 @@ class BusLineManager:
             BusLineManager.__instance = self
 
     def reset(self):
-        self.lineList.clear()
+        self._lineList.clear()
 
     def printLinelist(self):
         print("Recorded Lines")
