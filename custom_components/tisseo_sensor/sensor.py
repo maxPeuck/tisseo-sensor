@@ -149,8 +149,8 @@ class TisseoSensor(Entity):
 
         busCount = 0
         dataString = ""
-        for line in BusLineManager.getInstance().lineList:
-            attr["bus_" + str(busCount)] = line.name
+        for line in BusLineManager.getInstance()._lineList:
+            attr["bus_" + str(busCount)] = line._name
             if len(line.timeList) >= 1:
                 attr["bus_" + str(busCount) + "next1"] = line._timeList[0]
             else:
