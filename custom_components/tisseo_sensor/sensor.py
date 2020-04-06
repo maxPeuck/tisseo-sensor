@@ -50,22 +50,24 @@ def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
         [TisseoSensor(name, stopid, apikey)], update_before_add=True)
 
 
-
 class TisseoLine:
 
-    def __init__(self, lineName):
+    def __init__(self, lineName, shortName, direction, color):
         super().__init__()
-        self.name = lineName
-        self.timeList = []
+        self._name = lineName
+        self._shortName = shortName
+        self._direction = direction
+        self._color = color
+        self._timeList = []
 
     def addTime(self, time):
-        self.timeList.append(time)
+        self._timeList.append(time)
 
 
 class BusLineManager:
     __instance = None
 
-    lineList = []
+    _lineList = []
 
     @staticmethod
     def getInstance():
@@ -80,28 +82,29 @@ class BusLineManager:
             raise Exception("This class is a singleton!")
         else:
             BusLineManager.__instance = self
+
     def reset(self):
-        self.lineList.clear();
+        self.lineList.clear()
+
     def printLinelist(self):
         print("Recorded Lines")
-        for line in self.lineList:
+        for line in self._lineList:
             print(line.name)
-            for time in line.timeList:
+            for time in line._timeList:
                 print(time)
 
-    def addLineAndTime(self, lineName, time):
+    def addAttributes(self, fullName, shortName, direction, color, time):
         tempLine = None
 
         for currentLine in self.lineList:
-            if currentLine.name == lineName:
+            if currentLine.name == fullName:
                 tempLine = currentLine
                 if len(currentLine.timeList) < 2:
                     currentLine.addTime(time)
-                
 
         if tempLine == None:
-            print("new line: " + lineName)
-            tempLine = TisseoLine(lineName)
+            print("new line: " + fullName)
+            tempLine = TisseoLine(fullName, shortName, direction, color)
             tempLine.addTime(time)
             self.lineList.append(tempLine)
         # self.printLinelist()
@@ -127,40 +130,48 @@ class TisseoSensor(Entity):
         attr["stop_id"] = self._stopid
 
         #hacs = get_hacs()
-        #hacs.logger.critical(str(tisseodata))
+        # hacs.logger.critical(str(tisseodata))
 
         departures = tisseodata['departures']
         departurelist = departures['departure']
-        
+
         BusLineManager.getInstance().reset()
 
         for dep in departurelist:
             direction = dep['destination'][0]['name']
-            fullName = dep['line']['shortName'] + " | " + direction
-
+            shortName = dep['line']['shortName']
+            fullName = shortName + " | " + direction
+            lineColor = dep['line']['color']
             BusLineManager.getInstance().addLineAndTime(
                 fullName, dep['dateTime'])
 
         busCount = 0
+        dataString = ""
         for line in BusLineManager.getInstance().lineList:
             attr["bus_" + str(busCount)] = line.name
             if len(line.timeList) >= 1:
-                attr["bus_" + str(busCount) + "next1"] = line.timeList[0]
+                attr["bus_" + str(busCount) + "next1"] = line._timeList[0]
             else:
                 attr["bus_" + str(busCount) + "next1"] = "none"
             if len(line.timeList) >= 2:
-                attr["bus_" + str(busCount) + "next2"] = line.timeList[1]
+                attr["bus_" + str(busCount) + "next2"] = line._timeList[1]
             else:
                 attr["bus_" + str(busCount) + "next2"] = "none"
-            busCount +=1
+            attr["bus_" + str(busCount) + "color"] = line._lineColor
+            busCount += 1
 
-            attr['expirationDate'] = tisseodata['expirationDate']
+            dataString = dataString + "#" + line._shortName + \
+                "|" + line._direction+"|"+line._color+"|" + line._timeList[0]+"|" + line._timeList[1]
+
+
+        attr['dataString'] = dataString
+        attr['expirationDate'] = tisseodata['expirationDate']
         return attr
 
     @asyncio.coroutine
     def async_update(self):
 
-        TISSEOURL="https://api.tisseo.fr/v1/stops_schedules.json?stopPointId=" + \
+        TISSEOURL = "https://api.tisseo.fr/v1/stops_schedules.json?stopPointId=" + \
             self._stopid+"&key="+self._apikey
         tisseoFile = "/tmp/tisseo_" + self._stopid + ".json"
         opener = urllib.request.build_opener()
@@ -170,7 +181,7 @@ class TisseoSensor(Entity):
         tisseodata = json.load(open(tisseoFile))
 
         #hacs = get_hacs()
-        #hacs.logger.critical(tisseodata['expirationDate'])
+        # hacs.logger.critical(tisseodata['expirationDate'])
 
         self._state = tisseodata['expirationDate']
         return self._state
