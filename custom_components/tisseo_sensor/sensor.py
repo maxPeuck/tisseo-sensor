@@ -96,17 +96,17 @@ class BusLineManager:
     def addAttributes(self, fullName, shortName, direction, color, time):
         tempLine = None
 
-        for currentLine in self.lineList:
+        for currentLine in self._lineList:
             if currentLine.name == fullName:
                 tempLine = currentLine
-                if len(currentLine.timeList) < 2:
+                if len(currentLine._timeList) < 2:
                     currentLine.addTime(time)
 
         if tempLine == None:
             print("new line: " + fullName)
             tempLine = TisseoLine(fullName, shortName, direction, color)
             tempLine.addTime(time)
-            self.lineList.append(tempLine)
+            self._lineList.append(tempLine)
         # self.printLinelist()
 
 
