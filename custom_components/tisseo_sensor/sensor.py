@@ -58,10 +58,15 @@ class TisseoLine:
         self._shortName = shortName
         self._direction = direction
         self._color = color
-        self._timeList = []
+        self._timeList = ["none", "none"]
 
     def addTime(self, time):
-        self._timeList.append(time)
+        if(self._timeList[0] == "none"):
+            self._timeList[0] = time
+            return
+        if(self._timeList[1] == "none"):
+            self._timeList[1] = time
+            return
 
 
 class BusLineManager:
