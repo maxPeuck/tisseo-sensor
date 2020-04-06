@@ -144,8 +144,8 @@ class TisseoSensor(Entity):
             shortName = dep['line']['shortName']
             fullName = shortName + " | " + direction
             lineColor = dep['line']['color']
-            BusLineManager.getInstance().addLineAndTime(
-                fullName, dep['dateTime'])
+            BusLineManager.getInstance().addAttributes(
+                fullName, shortName, direction, lineColor, dep['dateTime'])
 
         busCount = 0
         dataString = ""
